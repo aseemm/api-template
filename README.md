@@ -37,6 +37,8 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"title":"D", "author":"
 
 curl -i -H "Content-Type: application/json" -X DELETE http://localhost:5000/books/11
 
+curl -i -H "Content-Type: application/json" -X POST -d '{"title":"D", "author":"D"}' http://book-spider.herokuapp.com/books
+
 
 curl -i http://alam1.aclibrary.org/search/?searchtype=t&searcharg=flash+boys
 curl -i "http://alam1.aclibrary.org/search/q?author=lewis%2C+michael&title=flash+boys"
