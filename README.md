@@ -43,3 +43,10 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"title":"D", "author":"
 
 curl -i http://alam1.aclibrary.org/search/?searchtype=t&searcharg=flash+boys
 curl -i "http://alam1.aclibrary.org/search/q?author=lewis%2C+michael&title=flash+boys"
+
+## Next steps
+. clean up frontend/google charts table
+. clean up requirements.txt, remove unused files
+. mimic blog.luisrei.com/articles/flaskrest.html structure "Implementing a RESTful Web API with Python & Flask"
+. authentication
+. change detect, goose
