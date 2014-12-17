@@ -51,3 +51,4 @@ curl -i "http://alam1.aclibrary.org/search/q?author=lewis%2C+michael&title=flash
 . authentication
 . change detect, goose
 . upgrading (and initing) databases in heroku
+. duplicate entries in database
