@@ -1,0 +1,6 @@
+show databases;
+-- create database library; 
+use library;
+-- create table book (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, title VARCHAR(256), author VARCHAR(256), link TEXT) ENGINE = MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci;
+LOAD DATA LOCAL INFILE 'books.tsv' INTO TABLE book FIELDS TERMINATED BY '\t' ENCLOSED BY '"' LINES TERMINATED BY '\n';
+select * from book;

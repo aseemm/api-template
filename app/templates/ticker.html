@@ -1,0 +1,28 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+  <h1 align="left"> PANW Stock Ticker
+  <h3 align="center">Price: {{ quote['l_cur'] }}m Change: {{ quote['c'] }}  
+</div>
+
+<div>
+  <h1 align="left"> Database Dump
+  <ul>
+    {% for user in users %}
+    <li> {{ user.id }}, {{ user.nickname }} </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div>
+  <h1 align="left"> Random Marvel Images
+  <ul>
+    {% for user in users %}
+    <li> {{ user.id }}, {{ user.nickname }} </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
