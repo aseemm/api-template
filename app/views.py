@@ -8,7 +8,7 @@ from config import DATABASE_QUERY_TIMEOUT
 @app.route('/books', methods=['GET'])
 def list_books():
     if request.method == 'GET':
-        lim = request.args.get('limit', 2)
+        lim = request.args.get('limit', 10)
         off = request.args.get('offset', 0)
 
         results = Book.query.limit(lim).offset(off).all()

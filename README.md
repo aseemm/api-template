@@ -50,3 +50,4 @@ curl -i "http://alam1.aclibrary.org/search/q?author=lewis%2C+michael&title=flash
 . mimic blog.luisrei.com/articles/flaskrest.html structure "Implementing a RESTful Web API with Python & Flask"
 . authentication
 . change detect, goose
+. upgrading (and initing) databases in heroku
