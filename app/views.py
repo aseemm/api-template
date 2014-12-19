@@ -21,7 +21,9 @@ def list_books():
                  'link': result.link}
             json_results.append(d)
             
-        return jsonify(items=json_results)
+        return render_template('index.html',
+                               title='Home',
+                               posts=json_results)
 
 @app.route('/books/<int:book_id>', methods=['GET'])
 def list_book(book_id):
