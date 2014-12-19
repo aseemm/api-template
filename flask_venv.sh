@@ -26,3 +26,4 @@ flask/bin/pip install coverage
 flask/bin/pip install gunicorn
 flask/bin/pip install celery
 flask/bin/pip install requests
+flask/bin/pip install beautifulsoup4

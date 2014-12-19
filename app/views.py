@@ -8,6 +8,8 @@ from config import DATABASE_QUERY_TIMEOUT
 import hashlib
 import datetime
 import requests
+from bs4 import BeautifulSoup
+from difflib import Differ, unified_diff
 
 @app.route('/')
 def api_root():
@@ -26,7 +28,8 @@ def api_links():
             d = {'id': result.id,
                  'uri': result.uri,
                  'md5hash': result.md5hash,
-                 'lchange': result.lchange}
+                 'timestamp': result.timestamp,
+                 'snapshot': result.snapshot}
             json_results.append(d)
     return jsonify(items=json_results)
 
@@ -38,7 +41,8 @@ def api_link(link_id):
     json_result = {'id': result.id,
                    'uri': result.uri,
                    'md5hash': result.md5hash,
-                   'lchange': result.lchange}
+                   'timestamp': result.timestamp,
+                   'result': result.snapshot}
     return jsonify(items=json_result)
 
 @app.route('/links', methods=['POST'])
@@ -46,20 +50,40 @@ def create_link():
     if not request.json or not 'uri' in request.json:
         abort(400)
 
-    r = requests.get(request.json['uri'])
-    m = hashlib.md5()
-    print(r.text.encode('utf-8'))
-    for line in r.text:
-        print (line.encode('utf-8'))
-        m.update(line.encode('utf-8'))
-                                
-    website = Website(uri=request.json['uri'], md5hash=m.hexdigest(), lchange=datetime.datetime.now().strftime("%Y-%m-%d"))
-    db.session.add(website)
-    db.session.commit()
+    result = Website.query.filter_by(uri=request.json['uri']).first()
+    if result == None:
+        # get the latest data
+        r = requests.get(request.json['uri'])
+        m = hashlib.md5()
+        for line in r.text:
+            m.update(line.encode('utf-8'))
+            
+            soup = BeautifulSoup(r.text)
+    
+            website = Website(uri=request.json['uri'], md5hash=m.hexdigest(), timestamp=datetime.datetime.utcnow(), snapshot=soup.get_text())
+            db.session.add(website)
+            db.session.commit()
+    else:
+        prev_snapshot = result.snapshot
+        prev_md5hash = result.md5hash
+        # get the latest data
+        r = requests.get(request.json['uri'])
+        m = hashlib.md5()
+        for line in r.text:
+            m.update(line.encode('utf-8'))
 
-    json_result = {'uri': website.uri,
-                   'md5hash': website.md5hash,
-                   'lchange': website.lchange}
+        soup = BeautifulSoup(r.text)
+        curr_md5hash = m.hexdigest()
+        curr_snapshot = soup.get_text()
+    
+    diff = unified_diff(prev_snapshot, curr_snapshot)
+    diffed_result = ''.join(diff)
+    json_result = {'uri': request.json['uri'],
+                   'prev_md5hash': prev_md5hash,
+                   'curr_md5hash': curr_md5hash,
+                   'prev_snapshot': prev_snapshot,
+                   'curr_snapshot': curr_snapshot,
+                   'diff': diffed_result}
 
     return jsonify(items=json_result)
 

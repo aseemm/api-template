@@ -20,7 +20,8 @@ class Website(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uri = db.Column(db.Text)
     md5hash = db.Column(db.String(256))
-    lchange = db.Column(db.String(256))
+    timestamp = db.Column(db.DateTime)
+    snapshot = db.Column(db.Text)
 
     def __repr__(self):  # pragma: no cover
         return '<Website %r>' % (self.uri)
