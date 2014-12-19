@@ -44,6 +44,11 @@ curl -i -H "Content-Type: application/json" -X POST -d '{"title":"D", "author":"
 curl -i http://alam1.aclibrary.org/search/?searchtype=t&searcharg=flash+boys
 curl -i "http://alam1.aclibrary.org/search/q?author=lewis%2C+michael&title=flash+boys"
 
+
+# change detect
+curl -i -H "Content-Type: application/json" -X POST -d '{"uri":"http://www.cnn.com"}' http://localhost:5000/links
+curl -i http://localhost:5000/links
+
 ## Next steps
 . clean up frontend/google charts table
 . clean up requirements.txt, remove unused files
